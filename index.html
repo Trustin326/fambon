@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff7f0"><meta name="description" content="Small moments. Stronger bonds. Fun family games, thoughtful questions, and gentle ways to reconnect.">
+<title>FamBon — Make room for each other</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="#" data-view="home"><span class="brand-mark">f<span>+</span></span><span>fambon<small>closer, one moment at a time</small></span></a>
+<div class="family-switch"><span class="family-avatar">🏡</span><span><b id="familyNameSide">Our little corner</b><small>Family space</small></span><button class="icon-btn" id="editFamily" aria-label="Edit family name">✎</button></div>
+<p class="nav-label">YOUR SPACE</p>
+<nav class="nav">
+<button class="nav-item active" data-view="home"><span>⌂</span> Home</button>
+<button class="nav-item" data-view="questions"><span>♡</span> Get to know you</button>
+<button class="nav-item" data-view="games"><span>✿</span> Play together</button>
+<button class="nav-item" data-view="character"><span>🎨</span> Family character</button>
+<button class="nav-item" data-view="journey"><span>🌱</span> Trust garden</button>
+<button class="nav-item" data-view="memories"><span>✧</span> Little memories</button>
+</nav>
+<div class="sidebar-bottom"><div class="kind-card"><span>💛</span><b>Little things count.</b><p>No perfect words needed. Just show up as you are.</p></div><button class="nav-item" data-view="settings"><span>⚙</span> Your settings</button></div>
+</aside>
+<main class="main">
+<header class="topbar"><button class="mobile-menu icon-btn" id="mobileMenu" aria-label="Open menu">☰</button><div class="crumb">Your family space <span>/</span> <b id="pageCrumb">Home</b></div><div class="top-actions"><span class="today" id="todayLabel"></span><button class="avatar-me" id="profileButton" aria-label="Edit your profile">🙂</button></div></header>
+<div class="content" id="content">
+<section class="welcome-banner"><div class="welcome-copy"><span class="eyebrow">A LITTLE TIME, A LOT OF LOVE</span><h1>Hey there, <span id="welcomeName">friend</span> <span class="wave">✦</span></h1><p>Connection isn't one big moment. It's all the little ones you make room for.</p><div class="banner-actions"><button class="btn btn-dark" data-view="questions">Today's little question <span>→</span></button><span class="soft-note">♡ Take it at your own pace</span></div></div><div class="banner-art" aria-hidden="true"><div class="sun"></div><div class="art-heart">♥</div><div class="art-person p1">😊</div><div class="art-person p2">🥰</div><div class="art-person p3">😎</div><div class="art-flower">✿</div><div class="art-spark">✦</div></div></section>
+<div class="section-heading"><div><span class="eyebrow">YOUR DAILY DOSE OF CLOSENESS</span><h2>Make a little moment</h2></div><span class="tiny-pill">No pressure, just presence</span></div>
+<div class="feature-grid">
+<button class="feature-card peach" data-view="questions"><span class="feature-icon">💬</span><span class="card-kicker">01 · OPEN UP</span><h3>A question worth asking</h3><p>Discover a new little thing about someone you love.</p><span class="card-link">Pick a question <b>↗</b></span></button>
+<button class="feature-card lilac" data-view="games"><span class="feature-icon">🎲</span><span class="card-kicker">02 · HAVE A LAUGH</span><h3>Play your way closer</h3><p>Guess, giggle, and find out what makes each other tick.</p><span class="card-link">Choose a game <b>↗</b></span></button>
+<button class="feature-card mint" data-view="character"><span class="feature-icon">🖍️</span><span class="card-kicker">03 · MAKE A MEMORY</span><h3>Meet your family character</h3><p>Take turns creating one wonderfully weird family mascot.</p><span class="card-link">Start drawing <b>↗</b></span></button>
+</div>
+<div class="lower-grid"><section class="panel daily-panel"><div class="panel-heading"><div><span class="eyebrow">TODAY'S CHECK-IN</span><h2>A tiny question, a big window</h2></div><span class="round-icon">♡</span></div><p class="question-large" id="homeQuestion">What's a small thing that always makes your day better?</p><div class="response-row"><textarea id="homeAnswer" placeholder="Share whatever feels right..." rows="3" aria-label="Your answer"></textarea></div><div class="panel-footer"><span class="privacy-note">🔒 Your answer stays on this device in demo mode.</span><button class="btn btn-coral" id="saveHomeAnswer">Save my thought ↗</button></div><div class="inline-status" id="homeStatus" role="status"></div></section>
+<section class="panel progress-panel"><div class="panel-heading"><div><span class="eyebrow">GROWING TOGETHER</span><h2>Your little wins</h2></div><span class="round-icon">🌱</span></div><div class="progress-stat"><div class="progress-ring"><span id="winCount">0</span><small>wins</small></div><div><b>Every effort matters.</b><p>Celebrate showing up, not getting everything right.</p></div></div><div class="progress-track"><span id="progressFill"></span></div><div class="progress-foot"><span id="progressText">Your first little win is waiting.</span><button class="text-btn" data-view="memories">See moments →</button></div></section></div>
+<footer class="footer"><span>Made with care, for the people who matter. <b>♡</b></span><span>Gentle connection, never perfection.</span></footer>
+</div>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="modal" class="modal"><form method="dialog" id="modalForm"><button class="modal-close" value="cancel" aria-label="Close">×</button><div id="modalContent"></div></form></dialog>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
