@@ -13,6 +13,8 @@
 - Memory scrapbook, individual deletion, JSON export, and local reset.
 - “Memories we haven’t made yet” idea library with practical steps, time/cost guidance, member-attributed suggestions, idea/planned/made status, and conversion of completed ideas into scrapbook memories.
 - Family idea-board voting: one local-device vote per idea with “I’d love this” / “Maybe later” choices, change/remove vote, vote totals, and newest/most-loved sorting. Votes are explicitly device-local until cloud sync is implemented.
+- Family playlist: add songs by title and artist, optionally attach an http(s) song link, open the link in a new tab, and remove songs. Playlist entries are stored locally.
+- Reworked all three family games with working selections, validation, save flows, prompt refresh, and scrapbook integration.
 - Accessible focus states and reduced-motion support.
 - No embedded service-role keys or payment secrets.
 
