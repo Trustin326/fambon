@@ -68,7 +68,7 @@ function spotlightSuggestions(type){
 }
 function spotlightsPage(){
  const items=[...(state.spotlights||[])].sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
- const upcoming=items.filter(x=>daysUntil(x.date)>=0);
+ const upcoming=items.filter(x=>x.date&&daysUntil(x.date)>=0);
  const cards=items.map((x,i)=>{const n=daysUntil(x.date);const when=n===null?'Date to be decided':n===0?'Today':n===1?'Tomorrow':n>1?'In '+n+' days':Math.abs(n)+' days ago';
  return '<article class="spotlight-card"><div class="spotlight-top"><span class="spotlight-emoji">'+esc(x.emoji||'💛')+'</span><span class="pill">'+esc(x.typeLabel||'Special moment')+'</span><span class="spotlight-count">'+esc(when)+'</span></div><h3>'+esc(x.member)+'</h3><p class="spotlight-title">'+esc(x.title||x.typeLabel||'A moment that matters')+'</p>'+(x.note?'<p>'+esc(x.note)+'</p>':'')+'<div class="spotlight-support"><b>Ways to show up</b><ul>'+spotlightSuggestions(x.type).map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul></div><div class="action-row"><button class="btn btn-light" data-spotlight-done="'+esc(x.id)+'">'+(x.completed?'Reopen':'Mark as celebrated')+'</button><button class="btn btn-light danger" data-spotlight-delete="'+esc(x.id)+'">Delete</button></div></article>'}).join('');
  return header('Member spotlight','Make room for what is happening in one person’s life. Remember their important dates, celebrate their wins, and offer support in the way they actually want.')+
@@ -90,7 +90,7 @@ function bindSpotlights(){
  $('#saveSpotlight').onclick=()=>{const member=$('#spotMember').value.trim(),type=$('#spotType').value,date=$('#spotDate').value,title=$('#spotTitle').value.trim(),note=$('#spotNote').value.trim(),emoji=$('#spotEmoji').value;
  if(!member)return toast('Add the family member’s name first.');
  const labels={birthday:'Birthday',graduation:'Graduation / achievement',new_job:'New job / career change',new_baby:'New baby / growing family',milestone:'Personal milestone',challenge:'Support through a difficult time',anniversary:'Anniversary / remembrance',other:'Special moment'};
- state.spotlights=state.spotlights||[];state.spotlights.unshift({id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())),member,type,typeLabel:labels[type],date,title,note,emoji,completed:false,createdAt:new Date().toISOString()});
+ state.spotlights=state.spotlights||[];state.spotlights.unshift({id:(window.crypto&&window.crypto.randomUUID?window.crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2)),member,type,typeLabel:labels[type],date,title,note,emoji,completed:false,createdAt:new Date().toISOString()});
  if(!save())return toast('Could not save. Your browser storage may be full.');
  toast('Their moment has a place in FamBon. ♡');navigate('spotlights');
  };
