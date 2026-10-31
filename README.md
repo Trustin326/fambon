@@ -12,6 +12,7 @@
 - Member Spotlight planner for birthdays, graduations, new jobs, new babies, personal milestones, anniversaries, and difficult seasons. Save dates, personal support preferences, suggested ways to show up, and mark moments as celebrated.
 - Memory scrapbook, individual deletion, JSON export, and local reset.
 - “Memories we haven’t made yet” idea library with practical steps, time/cost guidance, member-attributed suggestions, idea/planned/made status, and conversion of completed ideas into scrapbook memories.
+- Family idea-board voting: one local-device vote per idea with “I’d love this” / “Maybe later” choices, change/remove vote, vote totals, and newest/most-loved sorting. Votes are explicitly device-local until cloud sync is implemented.
 - Accessible focus states and reduced-motion support.
 - No embedded service-role keys or payment secrets.
 
@@ -26,7 +27,7 @@ A Supabase SQL foundation is now included at \`supabase/schema.sql\`. It defines
 - Families and family-member roles (\`owner\`, \`adult\`, \`member\`).
 - Expiring, single-use family invitations. Only a SHA-256 hash is stored; the raw invite token is returned once.
 - Family answers with private/family visibility.
-- Shared memories, game sessions, character drawing metadata, Trust Garden steps, and member spotlights for birthdays and life events.
+- Shared memories, game sessions, character drawing metadata, Trust Garden steps, member spotlights for birthdays and life events, future family memory ideas, and per-member votes on those ideas.
 - Row Level Security policies and membership/manager helper functions.
 - Transactional RPCs to create a family, issue an invite, and redeem an invite.
 
@@ -50,7 +51,7 @@ window.FAMBON_CONFIG = {
 };
 \`\`\`
 
-**Current integration boundary:** The new cloud-account panel in `cloud-account.js` supports Supabase email sign-up/sign-in, session persistence, listing joined family spaces, creating a family through the RPC, issuing a single-use invite token, and redeeming an invite. The rest of the app (answers, games, drawings, Trust Garden, scrapbook, and the Member Spotlight planner and future-memory suggestion board) still uses browser local storage and is not yet synced to family tables. The SQL has not been executed or security-tested in a live Supabase project. Do not treat this milestone as production-ready or as proof that all family content is shared.
+**Current integration boundary:** The new cloud-account panel in `cloud-account.js` supports Supabase email sign-up/sign-in, session persistence, listing joined family spaces, creating a family through the RPC, issuing a single-use invite token, and redeeming an invite. The rest of the app (answers, games, drawings, Trust Garden, scrapbook, and the Member Spotlight planner, future-memory suggestion board, and idea votes) still uses browser local storage and is not yet synced to family tables. The SQL has not been executed or security-tested in a live Supabase project. The `family_memory_idea_votes` table is a cloud schema foundation only; the current voting UI is device-local and does not write to this table. Do not treat this milestone as production-ready or as proof that all family content is shared.
 
 ## Production launch checklist
 
