@@ -109,6 +109,23 @@ create table if not exists public.family_memory_ideas (
 );
 create index if not exists family_memory_ideas_family_created_idx on public.family_memory_ideas(family_id,created_at desc);
 
+-- One authenticated vote per family member and idea. A member may change their choice.
+create table if not exists public.family_memory_idea_votes (
+  idea_id uuid not null references public.family_memory_ideas(id) on delete cascade,
+  family_id uuid not null references public.families(id) on delete cascade,
+  voter_id uuid not null references auth.users(id) on delete cascade,
+  choice text not null check (choice in ('love','maybe')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (idea_id, voter_id),
+  constraint family_memory_idea_votes_idea_family_fk
+    foreign key (idea_id, family_id)
+    references public.family_memory_ideas(id, family_id)
+    on delete cascade
+);
+create index if not exists family_memory_idea_votes_family_idx on public.family_memory_idea_votes(family_id,idea_id);
+
+
 create table if not exists public.family_garden_steps (
   id uuid primary key default gen_random_uuid(),
   family_id uuid not null references public.families(id) on delete cascade,
@@ -161,6 +178,7 @@ alter table public.family_characters enable row level security;
 alter table public.family_garden_steps enable row level security;
 alter table public.family_spotlights enable row level security;
 alter table public.family_memory_ideas enable row level security;
+alter table public.family_memory_idea_votes enable row level security;
 
 drop policy if exists "family members can view their family" on public.families;
 create policy "family members can view their family" on public.families
@@ -278,6 +296,31 @@ drop policy if exists "authors or managers can delete memory ideas" on public.fa
 create policy "authors or managers can delete memory ideas" on public.family_memory_ideas
 for delete to authenticated using (suggested_by = auth.uid() or public.is_family_manager(family_id));
 
+drop policy if exists "family members can read idea votes" on public.family_memory_idea_votes;
+create policy "family members can read idea votes" on public.family_memory_idea_votes
+for select to authenticated using (public.is_family_member(family_id));
+drop policy if exists "members can cast their own idea votes" on public.family_memory_idea_votes;
+create policy "members can cast their own idea votes" on public.family_memory_idea_votes
+for insert to authenticated with check (
+  voter_id = auth.uid()
+  and public.is_family_member(family_id)
+  and exists (
+    select 1 from public.family_memory_ideas i
+    where i.id = idea_id and i.family_id = family_id and i.status <> 'made'
+  )
+);
+drop policy if exists "members can change their own idea votes" on public.family_memory_idea_votes;
+create policy "members can change their own idea votes" on public.family_memory_idea_votes
+for update to authenticated using (
+  voter_id = auth.uid() and public.is_family_member(family_id)
+) with check (
+  voter_id = auth.uid() and public.is_family_member(family_id)
+);
+drop policy if exists "members can remove their own idea votes" on public.family_memory_idea_votes;
+create policy "members can remove their own idea votes" on public.family_memory_idea_votes
+for delete to authenticated using (voter_id = auth.uid() and public.is_family_member(family_id));
+
+
 drop policy if exists "members can read garden steps" on public.family_garden_steps;
 create policy "members can read garden steps" on public.family_garden_steps
 for select to authenticated using (public.is_family_member(family_id));
@@ -359,3 +402,4 @@ grant select, insert, update, delete on public.family_characters to authenticate
 grant select, insert, delete on public.family_garden_steps to authenticated;
 grant select, insert, update, delete on public.family_spotlights to authenticated;
 grant select, insert, update, delete on public.family_memory_ideas to authenticated;
+grant select, insert, update, delete on public.family_memory_idea_votes to authenticated;
