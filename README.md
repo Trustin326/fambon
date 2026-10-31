@@ -8,8 +8,10 @@
 - Daily question bank, multiple-choice starters, personal answers, and recent shares.
 - “Who would most likely…?”, “Two truths & a wish,” and “Remember when…” games.
 - Family-character drawing canvas with brush/color controls, rotating turns, notes, and local save.
-- Gentle Trust Garden activities.\n- Member Spotlight planner for birthdays, graduations, new jobs, new babies, personal milestones, anniversaries, and difficult seasons. Save dates, personal support preferences, suggested ways to show up, and mark moments as celebrated.
-- Memory scrapbook, individual deletion, JSON export, and local reset.\n- “Memories we haven’t made yet” idea library with practical steps, time/cost guidance, member-attributed suggestions, idea/planned/made status, and conversion of completed ideas into scrapbook memories.
+- Gentle Trust Garden activities.
+- Member Spotlight planner for birthdays, graduations, new jobs, new babies, personal milestones, anniversaries, and difficult seasons. Save dates, personal support preferences, suggested ways to show up, and mark moments as celebrated.
+- Memory scrapbook, individual deletion, JSON export, and local reset.
+- “Memories we haven’t made yet” idea library with practical steps, time/cost guidance, member-attributed suggestions, idea/planned/made status, and conversion of completed ideas into scrapbook memories.
 - Accessible focus states and reduced-motion support.
 - No embedded service-role keys or payment secrets.
 
