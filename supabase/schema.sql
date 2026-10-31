@@ -159,7 +159,8 @@ alter table public.family_memories enable row level security;
 alter table public.family_game_sessions enable row level security;
 alter table public.family_characters enable row level security;
 alter table public.family_garden_steps enable row level security;
-alter table public.family_spotlights enable row level security;\nalter table public.family_memory_ideas enable row level security;
+alter table public.family_spotlights enable row level security;
+alter table public.family_memory_ideas enable row level security;
 
 drop policy if exists "family members can view their family" on public.families;
 create policy "family members can view their family" on public.families
@@ -272,7 +273,7 @@ for insert to authenticated with check (public.is_family_member(family_id) and s
 drop policy if exists "members can update memory idea status" on public.family_memory_ideas;
 create policy "members can update memory idea status" on public.family_memory_ideas
 for update to authenticated using (public.is_family_member(family_id))
-with check (public.is_family_member(family_id) and suggested_by = (select i.suggested_by from public.family_memory_ideas i where i.id = id));
+with check (public.is_family_member(family_id));
 drop policy if exists "authors or managers can delete memory ideas" on public.family_memory_ideas;
 create policy "authors or managers can delete memory ideas" on public.family_memory_ideas
 for delete to authenticated using (suggested_by = auth.uid() or public.is_family_manager(family_id));
@@ -356,4 +357,5 @@ grant select, insert, update, delete on public.family_memories to authenticated;
 grant select, insert, update, delete on public.family_game_sessions to authenticated;
 grant select, insert, update, delete on public.family_characters to authenticated;
 grant select, insert, delete on public.family_garden_steps to authenticated;
-grant select, insert, update, delete on public.family_spotlights to authenticated;\ngrant select, insert, update, delete on public.family_memory_ideas to authenticated;
+grant select, insert, update, delete on public.family_spotlights to authenticated;
+grant select, insert, update, delete on public.family_memory_ideas to authenticated;
