@@ -26,3 +26,6 @@
 .memory-board-card .action-row{gap:7px;flex-wrap:wrap}
 .memory-board-card .action-row .btn{font-size:11px}
 @media(max-width:720px){.memory-idea-library,.memory-idea-board,.memory-suggest-grid{grid-template-columns:1fr}.memory-suggest-full{grid-column:auto}.memory-ideas-hero{padding:20px}.memory-ideas-art{font-size:34px}}
+
+/* Family idea board voting */
+.idea-sort-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.idea-sort{width:auto;min-width:145px;padding:8px 10px;font-size:11px}.idea-voting{padding:11px 12px;background:#fffaf6;border:1px solid #f2eae4;border-radius:12px;margin:12px 0}.idea-vote-counts{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:700;color:#766b83}.idea-vote-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.idea-vote-actions .btn{font-size:11px;padding:9px 11px}.idea-vote-actions .vote-selected{background:#ffe4d9;color:#8b4e45;box-shadow:inset 0 0 0 1px #f2a393}.idea-voting>.privacy-note{display:block;margin-top:8px;line-height:1.5}
