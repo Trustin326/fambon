@@ -9,7 +9,7 @@
 - “Who would most likely…?”, “Two truths & a wish,” and “Remember when…” games.
 - Family-character drawing canvas with brush/color controls, rotating turns, notes, and local save.
 - Gentle Trust Garden activities.\n- Member Spotlight planner for birthdays, graduations, new jobs, new babies, personal milestones, anniversaries, and difficult seasons. Save dates, personal support preferences, suggested ways to show up, and mark moments as celebrated.
-- Memory scrapbook, individual deletion, JSON export, and local reset.
+- Memory scrapbook, individual deletion, JSON export, and local reset.\n- “Memories we haven’t made yet” idea library with practical steps, time/cost guidance, member-attributed suggestions, idea/planned/made status, and conversion of completed ideas into scrapbook memories.
 - Accessible focus states and reduced-motion support.
 - No embedded service-role keys or payment secrets.
 
@@ -48,7 +48,7 @@ window.FAMBON_CONFIG = {
 };
 \`\`\`
 
-**Current integration boundary:** The new cloud-account panel in `cloud-account.js` supports Supabase email sign-up/sign-in, session persistence, listing joined family spaces, creating a family through the RPC, issuing a single-use invite token, and redeeming an invite. The rest of the app (answers, games, drawings, Trust Garden, scrapbook, and the new Member Spotlight planner) still uses browser local storage and is not yet synced to family tables. The SQL has not been executed or security-tested in a live Supabase project. Do not treat this milestone as production-ready or as proof that all family content is shared.
+**Current integration boundary:** The new cloud-account panel in `cloud-account.js` supports Supabase email sign-up/sign-in, session persistence, listing joined family spaces, creating a family through the RPC, issuing a single-use invite token, and redeeming an invite. The rest of the app (answers, games, drawings, Trust Garden, scrapbook, and the Member Spotlight planner and future-memory suggestion board) still uses browser local storage and is not yet synced to family tables. The SQL has not been executed or security-tested in a live Supabase project. Do not treat this milestone as production-ready or as proof that all family content is shared.
 
 ## Production launch checklist
 
