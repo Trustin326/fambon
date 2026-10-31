@@ -108,6 +108,7 @@ create table if not exists public.family_memory_ideas (
   updated_at timestamptz not null default now()
 );
 create index if not exists family_memory_ideas_family_created_idx on public.family_memory_ideas(family_id,created_at desc);
+create unique index if not exists family_memory_ideas_id_family_uidx on public.family_memory_ideas(id,family_id);
 
 -- One authenticated vote per family member and idea. A member may change their choice.
 create table if not exists public.family_memory_idea_votes (
@@ -306,7 +307,7 @@ for insert to authenticated with check (
   and public.is_family_member(family_id)
   and exists (
     select 1 from public.family_memory_ideas i
-    where i.id = idea_id and i.family_id = family_id and i.status <> 'made'
+    where i.id = family_memory_idea_votes.idea_id and i.family_id = family_memory_idea_votes.family_id and i.status <> 'made'
   )
 );
 drop policy if exists "members can change their own idea votes" on public.family_memory_idea_votes;
@@ -315,6 +316,10 @@ for update to authenticated using (
   voter_id = auth.uid() and public.is_family_member(family_id)
 ) with check (
   voter_id = auth.uid() and public.is_family_member(family_id)
+  and exists (
+    select 1 from public.family_memory_ideas i
+    where i.id = family_memory_idea_votes.idea_id and i.family_id = family_memory_idea_votes.family_id and i.status <> 'made'
+  )
 );
 drop policy if exists "members can remove their own idea votes" on public.family_memory_idea_votes;
 create policy "members can remove their own idea votes" on public.family_memory_idea_votes
