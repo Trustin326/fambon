@@ -48,7 +48,7 @@ window.FAMBON_CONFIG = {
 };
 \`\`\`
 
-**Important:** The SQL backend foundation is committed, but the current app still uses browser local storage. The frontend does not yet call these Supabase tables or RPCs. Do not treat the presence of the schema as proof that multi-user sync or account security is active.
+**Current integration boundary:** The new cloud-account panel in `cloud-account.js` supports Supabase email sign-up/sign-in, session persistence, listing joined family spaces, creating a family through the RPC, issuing a single-use invite token, and redeeming an invite. The rest of the app (answers, games, drawings, Trust Garden, and scrapbook) still uses browser local storage and is not yet synced to family tables. The SQL has not been executed or security-tested in a live Supabase project. Do not treat this milestone as production-ready or as proof that all family content is shared.
 
 ## Production launch checklist
 
