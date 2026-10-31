@@ -74,6 +74,24 @@ create table if not exists public.family_characters (
   updated_at timestamptz not null default now()
 );
 
+
+-- Member spotlights: family-shared birthdays, milestones, and support moments.
+create table if not exists public.family_spotlights (
+  id uuid primary key default gen_random_uuid(),
+  family_id uuid not null references public.families(id) on delete cascade,
+  created_by uuid not null references auth.users(id) on delete cascade,
+  member_name text not null check (char_length(member_name) between 1 and 60),
+  occasion_type text not null check (occasion_type in ('birthday','graduation','new_job','new_baby','milestone','challenge','anniversary','other')),
+  title text not null default '' check (char_length(title) <= 100),
+  event_date date,
+  support_note text not null default '' check (char_length(support_note) <= 700),
+  emoji text not null default '💛' check (char_length(emoji) <= 8),
+  completed boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists family_spotlights_family_date_idx on public.family_spotlights(family_id,event_date);
+
 create table if not exists public.family_garden_steps (
   id uuid primary key default gen_random_uuid(),
   family_id uuid not null references public.families(id) on delete cascade,
@@ -124,6 +142,7 @@ alter table public.family_memories enable row level security;
 alter table public.family_game_sessions enable row level security;
 alter table public.family_characters enable row level security;
 alter table public.family_garden_steps enable row level security;
+alter table public.family_spotlights enable row level security;
 
 drop policy if exists "family members can view their family" on public.families;
 create policy "family members can view their family" on public.families
@@ -212,6 +231,21 @@ drop policy if exists "managers can delete character" on public.family_character
 create policy "managers can delete character" on public.family_characters
 for delete to authenticated using (public.is_family_manager(family_id));
 
+
+drop policy if exists "family members can view spotlights" on public.family_spotlights;
+create policy "family members can view spotlights" on public.family_spotlights
+for select to authenticated using (public.is_family_member(family_id));
+drop policy if exists "family members can create spotlights" on public.family_spotlights;
+create policy "family members can create spotlights" on public.family_spotlights
+for insert to authenticated with check (public.is_family_member(family_id) and created_by = auth.uid());
+drop policy if exists "authors or managers can update spotlights" on public.family_spotlights;
+create policy "authors or managers can update spotlights" on public.family_spotlights
+for update to authenticated using (created_by = auth.uid() or public.is_family_manager(family_id))
+with check (public.is_family_member(family_id));
+drop policy if exists "authors or managers can delete spotlights" on public.family_spotlights;
+create policy "authors or managers can delete spotlights" on public.family_spotlights
+for delete to authenticated using (created_by = auth.uid() or public.is_family_manager(family_id));
+
 drop policy if exists "members can read garden steps" on public.family_garden_steps;
 create policy "members can read garden steps" on public.family_garden_steps
 for select to authenticated using (public.is_family_member(family_id));
@@ -291,3 +325,4 @@ grant select, insert, update, delete on public.family_memories to authenticated;
 grant select, insert, update, delete on public.family_game_sessions to authenticated;
 grant select, insert, update, delete on public.family_characters to authenticated;
 grant select, insert, delete on public.family_garden_steps to authenticated;
+grant select, insert, update, delete on public.family_spotlights to authenticated;
